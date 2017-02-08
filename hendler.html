@@ -1,0 +1,41 @@
+<html ng-app="app">
+<head>
+    <title>javascript</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+          type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script type="text/javascript" src="hendler.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+
+<body>
+
+<div ng-controller="todoCtrl">
+
+    <button ng-click="add()">ADD</button>
+    <h3>{{inpts.length}}</h3>
+
+    <div ng-repeat="inp in inpts">
+        <input type="checkbox" ng-model="inp.checked">
+        <input ng-model="inp.text">
+        <button ng-click="delElem($index)">DEL</button>
+        <button ng-click="saveElem(inp.text, inp.checked, $index)">SAVE</button>
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

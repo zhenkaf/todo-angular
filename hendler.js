@@ -57,8 +57,8 @@ app.controller('todoCtrl', function($scope){
 
 	$scope.saveElem = function(row, checked, index){
 		var obj = {
-			a : row,
-			b : checked
+			aa : row,
+			bb : checked
 		};
 		var n =JSON.parse(localStorage.getItem("todo"));
 		n.splice(index, 1, obj);
