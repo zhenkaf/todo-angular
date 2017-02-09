@@ -9,33 +9,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-
 <body>
-
-<div ng-controller="todoCtrl">
-
-    <button ng-click="add()">ADD</button>
-    <h3>{{inpts.length}}</h3>
-
-    <div ng-repeat="inp in inpts">
-        <input type="checkbox" ng-model="inp.checked">
-        <input ng-model="inp.text">
-        <button ng-click="delElem($index)">DEL</button>
-        <button ng-click="saveElem(inp.text, inp.checked, $index)">SAVE</button>
+    <div ng-controller="todoCtrl">
+        <button ng-click="add()">ADD</button>
+            false = {{falseCountCheckeds}}
+            true = {{trueCountCheckeds}}
+        <div ng-repeat="inp in inpts">
+            <input type="checkbox" ng-model="inp.checked" ng-change="change(inp.text, inp.checked, $index)">
+            <input ng-model="inp.text" ng-change="change(inp.text, inp.checked, $index)">
+            <button ng-click="delElem($index)">DEL</button>
+        </div>
     </div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
 </body>
 </html>

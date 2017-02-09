@@ -1,23 +1,46 @@
 var app = angular.module('app', []);
 app.controller('todoCtrl', function($scope){
+
 	$scope.inpts = [];
+
+	$scope.howManyCheckeds = function(){
+		$scope.trueCountCheckeds = 0;
+		$scope.falseCountCheckeds = 0;
+		if(localStorage.getItem("todo")) {
+			var todoRows = JSON.parse(localStorage.getItem("todo"));
+			for(i = 0; i < todoRows.length; i++){
+				var valPropertyChe = todoRows[i].checked;
+				if (valPropertyChe == false){
+					$scope.falseCountCheckeds++;
+				}
+				else {
+					$scope.trueCountCheckeds++;
+				}
+			}
+		}
+	};
 	if(localStorage.getItem("todo")) {
-		var arrObjects = JSON.parse(localStorage.getItem("todo"));
-		for(i = 0; i < arrObjects.length; i++){
-			var valPropertyRow = arrObjects[i].a;
-			var valPropertyChe = arrObjects[i].b;
+		var todoRows = JSON.parse(localStorage.getItem("todo"));
+		for(i = 0; i < todoRows.length; i++){
+			var valPropertyRow = todoRows[i].text;
+			var valPropertyChe = todoRows[i].checked;
 			var info = {
 				text: valPropertyRow,
 				checked: valPropertyChe
 			};
 			$scope.inpts.push(info);
 		}
+		$scope.howManyCheckeds();
 	}
-	$scope.local = function(str, isDone) {
+	$scope.change = function(row, checked, index){
+		$scope.saveElem(row, checked, index);
+		$scope.howManyCheckeds();
+	};
+	$scope.local = function() {
 		if (localStorage.getItem("todo") != undefined) {
 			var inLocMas = {
-				text: str,
-				checked: isDone
+				text: '',
+				checked: false
 			};
 			var todoRows = JSON.parse(localStorage.getItem("todo"));
 			todoRows.push(inLocMas);
@@ -27,43 +50,40 @@ app.controller('todoCtrl', function($scope){
 		else {
 			var locStorMas = [];
 			var inLocMas = {
-				text: str,
-				checked: isDone
+				text: '',
+				checked: false
 			};
 			locStorMas.push(inLocMas);
 			var todoRows = JSON.stringify(locStorMas);
 			localStorage.setItem("todo", todoRows);
 		}
 	};
-
-
-	$scope.add = function(str, isDone) {
+	$scope.add = function() {
 		var info = {
-			text: str,
-			checked: isDone
+			text: '',
+			checked: false
 		};
 		$scope.inpts.push(info);
-		$scope.local(str, isDone);
+		$scope.local();
+		$scope.howManyCheckeds();
 	};
-
-
 	$scope.delElem = function(index){
 		var todoRows = JSON.parse(localStorage.getItem("todo"));
 		todoRows.splice(index, 1);
 		var serialTodoRows = JSON.stringify(todoRows);
 		localStorage.setItem("todo", serialTodoRows);
-		$scope.inpts.splice(index, 1)
+		$scope.inpts.splice(index, 1);
+		$scope.howManyCheckeds();
 	};
-
 	$scope.saveElem = function(row, checked, index){
 		var obj = {
-			aa : row,
-			bb : checked
+			text : row,
+			checked : checked
 		};
-		var n =JSON.parse(localStorage.getItem("todo"));
-		n.splice(index, 1, obj);
-		var newN = JSON.stringify(n);
-		localStorage.setItem("todo", newN);
+		var todoRows = JSON.parse(localStorage.getItem("todo"));
+		todoRows.splice(index, 1, obj);
+		var serialTodoRows = JSON.stringify(todoRows);
+		localStorage.setItem("todo", serialTodoRows);
 	};
 });
 
